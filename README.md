@@ -1,7 +1,19 @@
 <div align="center">
+  <img
+    src="https://github.com/user-attachments/assets/f0e9902a-68a0-4cb0-9854-643064db10a3"
+    alt="Coffee Talk Tokyo Vita"
+    width="320"
+  />
+
   <h1>Coffee Talk Tokyo Vita</h1>
-  <p>An unofficial native backport of <strong>Coffee Talk Tokyo</strong> for the PlayStation Vita.</p>
+
+  <p><em>I'll have a medium iced latte, no sugar please.</em></p>
+
   <p>
+    An unofficial native backport of <strong>Coffee Talk Tokyo</strong>
+    to the <strong>PlayStation Vita</strong>, bringing Tokyo's cozy
+    late-night café experience to Sony's handheld.
+  </p>
     <img src="https://img.shields.io/badge/STATUS-WORK_IN_PROGRESS-orange?style=for-the-badge" alt="Work in progress">
     <img src="https://img.shields.io/badge/PLATFORM-PS_VITA-003791?style=for-the-badge&logo=playstation&logoColor=white" alt="PS Vita">
     <img src="https://img.shields.io/badge/UNITY-2017.4.10f1-222222?style=for-the-badge&logo=unity&logoColor=white" alt="Unity 2017.4.10f1">
