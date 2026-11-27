@@ -14,10 +14,11 @@
     to the <strong>PlayStation Vita</strong>, bringing Tokyo's cozy
     late-night café experience to Sony's handheld.
   </p>
+  <p>
     <img src="https://img.shields.io/badge/STATUS-WORK_IN_PROGRESS-orange?style=for-the-badge" alt="Work in progress">
     <img src="https://img.shields.io/badge/PLATFORM-PS_VITA-003791?style=for-the-badge&logo=playstation&logoColor=white" alt="PS Vita">
     <img src="https://img.shields.io/badge/UNITY-2017.4.10f1-222222?style=for-the-badge&logo=unity&logoColor=white" alt="Unity 2017.4.10f1">
-    <img src="https://img.shields.io/badge/SCOPE-DEMO-yellow?style=for-the-badge" alt="Demo only">
+    <img src="https://img.shields.io/badge/SCOPE-DEMO%20%2B%20FULL-yellow?style=for-the-badge" alt="Demo and full game development">
   </p>
   <p>
     <a href="https://github.com/WolffsRoom/CoffeeTalkTokyoVita/releases">Releases</a> ·
@@ -31,32 +32,55 @@ CoffeeTalkTokyoVita aims to bring the original visual novel and coffee-brewing e
 Rather than recreating the game in a different engine or streaming the PC version, the project adapts the original scenes, C# gameplay logic, dialogue systems, animations, UI and asset formats to the legacy Unity runtime.
 
 > [!IMPORTANT]
-> The current scope is exclusively the **Coffee Talk Tokyo PC demo**. Work on the full game is planned as a future development phase, once the demo backport is stable. The full game is not currently supported.
+> Development is now split into two independent native Vita backports: **Coffee Talk Tokyo Demo** and **Coffee Talk Tokyo** (full game).
 >
-> This is an experimental, unofficial fan project, not a finished release. No proprietary game data, decompiled game code, or licensed Unity/PlayStation SDK binaries are distributed by this repository. Obtain the original game from its official source.
+> The demo has reached gameplay on real Vita hardware. The full game is still undergoing compatibility migration and has not yet produced a validated Vita build.
+>
+> This is an experimental, unofficial fan project. No proprietary game data, decompiled game code, or licensed Unity/PlayStation SDK binaries are distributed by this repository. Obtain the original game from its official source.
 
 ---
 
 ## Project Status
 
-The backport is currently undergoing compatibility testing on Windows using Unity 2017 before full validation on PlayStation Vita hardware. A smaller proof of concept has already been tested on real hardware; the complete demo project is a separate, more ambitious development effort.
+| Edition | Development version | Title ID | Status |
+| :--- | :---: | :---: | :--- |
+| **Coffee Talk Tokyo Demo** | v0.19 | `CTTK01001` | Native VPK built; latest changes awaiting hardware testing |
+| **Coffee Talk Tokyo** | v0.1 | `CTTK02001` | Full game migration in progress; no validated VPK yet |
 
-| Component | Status |
+The two editions use separate project directories and application IDs, allowing independent installations and save data. Version numbers refer to development builds, not necessarily public releases.
+
+### Demo — v0.19
+
+The native demo has reached the café, dialogue and smartphone recipe interface on real Vita hardware. Recent development focuses on stability, physical controls and performance.
+
+- Native PSP2 / IL2CPP build at 960 × 544.
+- 34 music tracks through a native OGG Vorbis streaming plugin.
+- BC1/DXT1, BC3/DXT5, RGB565 and RGBA4444 texture optimizations.
+- Native on-screen keyboard for barista name entry.
+- Physical gamepad navigation, touchscreen interaction and right-stick camera movement.
+- Improved virtualized recipe list handling and music app text rendering.
+- Reduced auxiliary camera and Latte Art simulation workloads.
+- Low-latency audio effects and per-state frame-time/memory logging.
+
+The v0.19 development VPK is approximately **173 MB**, down from approximately 195 MB in v0.18. The build and package audits passed; the latest fixes still require physical hardware verification.
+
+### Full game — v0.1
+
+The full PC game is being adapted in a separate Unity 2017 project, using the demo's compatibility work as a starting point.
+
+| Migration milestone | Status |
 | :--- | :--- |
-| Unity 6 → Unity 2017 project migration | Implemented; ongoing compatibility work |
-| Original demo scenes and gameplay scripts | Recovered and integrated |
-| Windows compatibility build | Compiles and launches |
-| Language selection, opening logos and main menu | Tested on Windows |
-| Opening sequence, dialogue, inventory and brewing | Reached during Windows gameplay tests |
-| 960 × 544 display | Validated through the Windows menu transition |
-| Sprite UVs, character transparency and text wrapping | Latest fixes implemented; awaiting visual regression tests |
-| Custom shader effects | Partial; fidelity improvements ongoing |
-| Offline initialization and local save system | Implemented; save/load regression testing pending |
-| Native Vita inputs and touch | Initial integration; full validation pending |
-| Complete demo VPK | In development |
-| Full game | Planned |
+| Original full-game scenes and dialogue resources | Recovered |
+| 10 original scenes and 16 day-localization CSV files | Preserved |
+| 47 original OGG music tracks | Prepared for native streaming |
+| 7,448 sprite assets | Converted to legacy geometry |
+| 71 TextMeshPro font assets | Converted; visual verification pending |
+| PSP2 and desktop C# diagnostics | Passed |
+| Unity scene import and reference validation | In progress |
+| Native full-game VPK | Pending |
+| Complete campaign and save/load tests on Vita | Pending |
 
-The goal is a faithful **1:1 port**, keeping the original gameplay and presentation wherever possible while adapting the implementation to the Vita's hardware and legacy engine.
+The goal is a faithful **1:1 backport**, keeping the original gameplay and presentation wherever possible while adapting the implementation to the Vita's hardware and legacy engine. Some visual effects and performance-sensitive systems still require compromises and further testing.
 
 ---
 
@@ -113,19 +137,28 @@ Some recovered shaders contain only simplified placeholder implementations rathe
 
 ### 6. Audio, Video and Controls
 
-- Repaired malformed recovered audio files and configured streaming for OGG music.
-- Adapted splash video audio routing for the legacy player.
-- Preserved the original sound and video assets in the local development project.
-- Began adapting gamepad input, dialogue advancement and touch support for the Vita.
+- Native OGG Vorbis streaming for music instead of embedding large decoded PCM tracks.
+- Streaming for long ambient audio, with smaller mono PCM effects for responsive brewing and smartphone interactions in the latest demo build.
+- H.264 introduction videos adapted for native Vita playback.
+- Native Vita keyboard integration, gamepad navigation and touchscreen support.
+- Right analog stick camera movement independent of UI navigation.
 
-Audio playback, video decoding, physical controls and touch interaction still require end-to-end testing on the handheld.
+### 7. Performance and Memory
+
+- On-demand loading for selected gallery, character and localization resources.
+- Texture compression using Vita-compatible 4-, 8- and 16-bit formats.
+- Reduced auxiliary portrait render targets and scheduled camera updates.
+- Lower-cost Latte Art fluid simulation while retaining the original gameplay system.
+- Bounded audio-source pool and frame-time/memory checkpoints.
+
+These changes target improved stability and smoother gameplay, not a verified locked 60 FPS. Actual performance and visual fidelity remain under hardware testing.
 
 ---
 
 ## How It Works
 
 ```text
-Original PC demo (Unity 6)
+Original PC game / demo (Unity 6)
           |
           v
    Asset and scene recovery
@@ -164,35 +197,50 @@ Screenshots will be added after visual regression testing. Windows development c
 
 ## Controls
 
-The target input scheme combines the original game's pointer-based interactions with physical PlayStation Vita controls and the touchscreen. Dialogue advancement through the Cross button is being integrated.
+The Vita input scheme combines physical controls with the original touch/pointer-based interface.
 
-The final button mapping will be documented after the demo's menus, inventory and brewing interactions have been validated on real hardware.
+| Input | Function |
+| :--- | :--- |
+| D-pad / Left analog stick | UI and ingredient navigation |
+| Right analog stick | Camera movement |
+| Cross | Confirm / advance dialogue |
+| Circle | Back / cancel |
+| Touchscreen | Pointer-based interaction |
+
+Context-specific shortcuts and the complete brewing/Latte Art control scheme are still being validated on hardware.
 
 ---
 
 ## Roadmap
 
+### Demo
 - [x] Recover and integrate the original demo scenes.
-- [x] Establish a working Unity 2017 Windows compatibility build.
-- [x] Restore the original startup, language selection and main menu.
-- [x] Preserve the Vita's 960 × 544 display resolution.
-- [x] Reach dialogue and coffee-brewing gameplay in desktop tests.
-- [ ] Complete visual regression tests for sprites, character animations and typography.
-- [ ] Restore remaining shader effects and original visual fidelity.
-- [ ] Validate all demo dialogue branches, inventory interactions and drink preparation.
-- [ ] Verify audio, video, controls and save/load behavior on real hardware.
-- [ ] Optimize RAM, VRAM, loading times and frame pacing for the Vita.
-- [ ] Complete and test the full demo VPK.
-- [ ] Document the installation and user-supplied game-data preparation workflow.
-- [ ] Begin adapting the full game.
+- [x] Establish Windows compatibility and native PSP2 builds.
+- [x] Reach the café and gameplay on real Vita hardware.
+- [x] Integrate native OGG music streaming and Vita keyboard.
+- [x] Implement texture, audio and memory optimizations.
+- [ ] Verify the latest brewing, smartphone and Latte Art fixes on hardware.
+- [ ] Complete visual, control, save/load and performance regression tests.
+- [ ] Finalize the user-supplied game-data preparation workflow.
+
+### Full game
+- [x] Create an independent full-game project and application ID.
+- [x] Recover full-game scenes, dialogue, music and assets.
+- [x] Adapt gameplay scripts and pass legacy C# diagnostics.
+- [x] Convert sprite geometry and font assets.
+- [ ] Complete scene and serialized-reference validation.
+- [ ] Build and validate the first native full-game VPK.
+- [ ] Test the complete campaign, branching, saves and memory usage on Vita.
 
 ---
 
 ## Building and Installation
 
-The full demo backport is not ready for public installation yet. The intended build target is Unity 2017.4.10f1's PSP2/IL2CPP backend, using an appropriately licensed PlayStation Vita development environment.
+Development builds use Unity 2017.4.10f1's native PSP2 / IL2CPP backend and an appropriately licensed PlayStation Vita development environment.
 
-Public build and installation instructions will be added when the compatibility workflow, required game data and distribution requirements have been finalized. A complete standalone VPK is not currently available from this repository.
+The demo can be built locally as a native VPK. The full game is not yet ready for installation. Check the [Releases](https://github.com/WolffsRoom/CoffeeTalkTokyoVita/releases) page for any publicly available releases; local development builds are not automatically published.
+
+Public build and installation instructions will be added when the compatibility workflow, required user-supplied game data and distribution requirements have been finalized. This repository does not distribute proprietary game assets or licensed SDK components.
 
 ---
 
